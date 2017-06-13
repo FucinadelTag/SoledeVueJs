@@ -8,12 +8,7 @@ class marketCloudService {
             "public_key" : process.env.MARKETCLOUD.public_key
         })
 
-            if (this.marketcloud.token) {
-                // Then the user is authenticated and its data is in
-                console.log(this.marketcloud.currentUser);
-            } else {
-                // User not authenticated, prompt the user for username and password
-            }
+
 
         this.axios = axios.create({
             baseURL: 'https://api.marketcloud.it/v0/',
@@ -27,6 +22,18 @@ class marketCloudService {
         });
 
     }
+
+    getUser () {
+        // method body code here
+        if (this.marketcloud.token) {
+                // Then the user is authenticated and its data is in
+            return this.marketcloud.currentUser
+        } else {
+            // User not authenticated, prompt the user for username and password
+            return false
+        }
+
+     }
 
     async getProducts () {
         // method body code here
@@ -58,12 +65,12 @@ class marketCloudService {
 
         try {
 
-        let user = await this.marketcloud.users.authenticate(userData.username, userData.password);
+        let response = await this.marketcloud.users.authenticate(userData.email, userData.password);
 
-        console.log (user);
+        return response;
 
         } catch (error) {
-            console.error(error);
+            return error;
         }
 
 

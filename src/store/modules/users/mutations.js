@@ -1,9 +1,8 @@
-import {
-  IS_AUTHENTICATE,
-} from './mutation-types'
+import * as types from './mutation-types'
 
 export default {
-  [IS_AUTHENTICATE] (state, user) {
+  [types.SET_USER] (state, user) {
     console.log (user);
+    state.user = user;
   }
 }

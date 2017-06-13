@@ -1,9 +1,18 @@
+import  marcketcloud from '../../../servicies/marcketcloud'
+
 export function initialState () {
 
-    let user = localStorage.getItem("user")
+    let userData = marcketcloud.getUser();
 
-    if (user){
-        return user
+    if (userData){
+        return {
+            user: {
+                    isAuthenticate: true,
+                    userId: userData.id,
+                    nome: userData.name,
+                    email: userData.email
+                }
+        }
     } else {
         return {
             user: {

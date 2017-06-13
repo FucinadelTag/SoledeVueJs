@@ -2,9 +2,24 @@ import * as types from './mutation-types'
 import  marcketcloud from '../../../servicies/marcketcloud'
 
 
-export function login ({ commit }, userData) {
+export async function login ({ commit }, userData) {
 
-  let user = marcketcloud.login(userData);
+  let response = await marcketcloud.login(userData);
 
-  //commit(types.IS_AUTHENTICATE, userData)
+  if (response.status){
+
+    let user = response.data.user;
+
+    user.isAuthenticate = true;
+
+    commit(types.SET_USER, user);
+  } else {
+    console.log (response)
+  }
+
+
+
+  // let user = response.data.user;
+
+  // commit(types.SET_USER, user);
 }

@@ -3,17 +3,21 @@
     <form>
       <div class="row">
         <div class="medium-6 columns">
-          <label>Username
-            <input type="text" v-model="userData.username" placeholder="username">
-          </label>
+            <label class="label" for="email">Email</label>
+            <p :class="{ 'control': true }">
+                <input v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" v-model="userData.email" name="email" type="text" placeholder="Email">
+                <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+            </p>
         </div>
         <div class="medium-6 columns">
-          <label>Password
-            <input type="password" v-model="userData.password" placeholder="password">
-          </label>
+          <label class="label" for="email">Password</label>
+            <p :class="{ 'control': true }">
+                <input v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('email') }" v-model="userData.password" name="password" type="password" placeholder="Password">
+                <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
+            </p>
         </div>
       </div>
-      <button type="submit" v-on:click.prevent="onSubmit" class="btn btn-primary">Invia</button>
+      <button type="submit" v-on:click.prevent="validateBeforeSubmit" class="btn btn-primary">Invia</button>
     </form>
   </div>
 </template>
@@ -23,22 +27,23 @@
   import { mapGetters, mapActions } from 'vuex'
 
   export default {
-      props: ['user'],
-      methods: {
-        ...mapActions([
-          'login'
-        ]),
-        onSubmit(userData) {
-          this.login(this.userData);
+      data: function () {
+        return {
+          userData: Object.assign({}, this.$store.state.users.user)
         }
       },
-      computed: {
-        userData () {
-          return this.getUSer
-        },
-        ...mapGetters({
-          getUSer: 'getUser'
-        })
-  }
+      methods: {
+        ...mapActions([
+          'login',
+        ]),
+        validateBeforeSubmit() {
+            this.$validator.validateAll().then(() => {
+            this.login(this.userData);
+            alert('From Submitted!');
+          }).catch(() => {
+            alert('Correct them errors!');
+          });
+        }
+      }
   }
 </script>
