@@ -1,4 +1,4 @@
-export const IS_AUTHENTICATE = 'users/IS_AUTHENTICATE';
-export const SET_NOME = 'users/SET_NOME';
-export const SET_EMAIL = 'users/SET_EMAIL';
+export const LOGOUT = 'users/LOGOUT';
 export const SET_USER = 'users/SET_USER';
+export const SET_ISAUTHENTICATE = 'users/SET_ISAUTHENTICATE';
+export const SET_MESSAGE = 'users/SET_MESSAGE';

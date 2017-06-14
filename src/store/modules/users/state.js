@@ -7,22 +7,22 @@ export function initialState () {
     if (userData){
         return {
             user: {
-                    isAuthenticate: true,
                     userId: userData.id,
-                    nome: userData.name,
+                    name: userData.name,
                     email: userData.email
-                }
+                },
+            isAuthenticate:JSON.parse(localStorage.getItem('isAuthenticate')),
+            message: false
         }
     } else {
         return {
             user: {
-                isAuthenticate: false,
                 userId: null,
-                nome: 'Lorenzo',
-                cognome: 'Caldara',
-                username: 'lorenzo@dinoweb.net',
+                name: 'Lorenzo',
                 email: 'lorenzo@dinoweb.net'
-            }
+            },
+            isAuthenticate: JSON.parse(localStorage.getItem('isAuthenticate')),
+            message: false
         }
 
     }

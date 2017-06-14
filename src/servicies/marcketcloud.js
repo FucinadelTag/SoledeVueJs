@@ -35,46 +35,42 @@ class marketCloudService {
 
      }
 
-    async getProducts () {
+    async getProductById (id) {
         // method body code here
-        console.log (this.marketcloud);
+        try {
 
-        var query = {price_gt:10}
+            let responese = await this.marketcloud.products.getById(id);
 
-        let products = await this.marketcloud.products.list(query);
+            console.log (responese.data)
 
-        console.log (products);
+            return (responese.data);
+
+        } catch (error) {
+            return error;
+        }
+
+        //console.log (product);
 
      }
 
-     async login (userData) {
+    async login (userData) {
         // method body code here
-
-        console.log (userData.password);
-
-        // this.axios.post('users/authenticate', {
-        //     email: userData.username,
-        //     password: userData.password
-        // })
-        //   .then(function (response) {
-        //     console.log(response);
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
-
         try {
 
         let response = await this.marketcloud.users.authenticate(userData.email, userData.password);
 
-        return response;
+            return response;
 
         } catch (error) {
             return error;
         }
 
 
-     }
+    }
+
+    getMarketCloud (){
+        return this.marketcloud;
+    }
 }
 
 

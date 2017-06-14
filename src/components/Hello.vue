@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>{{ nome }}</h1>
     <router-link :to="{ name: 'Login'}">Login</router-link>
+    <a href="#" v-on:click.prevent="checkout">Acquista</a>
     <h2>Essential Links</h2>
     <ul>
       <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
@@ -29,7 +30,17 @@ export default {
     ...mapGetters({
       nome: 'getNome'
     })
-  }
+  },
+  methods: {
+        ...mapActions([
+          'addToCart'
+        ]),
+        checkout (){
+          this.addToCart (185014);
+          this.$router.push({'path': '/checkout'})
+
+        }
+      }
 }
 
 // export default {

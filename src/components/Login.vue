@@ -1,5 +1,13 @@
 <template>
-  <div class="login">
+  <div v-if="isAuthenticate" class="login">
+    <div>Buongiorno {{getNome}}</div>
+    <a href="#" v-on:click.prevent="logout">Logout</a>
+  </div>
+
+  <div v-else class="login">
+
+
+    <div v-if="getMessage" class="form-control-feedback">{{getMessage}}</div>
     <form>
       <div class="row">
         <div class="medium-6 columns">
@@ -29,19 +37,31 @@
   export default {
       data: function () {
         return {
-          userData: Object.assign({}, this.$store.state.users.user)
+          userData: Object.assign({}, this.$store.state.users.user),
+          formMessage: false
         }
+      },
+      computed: {
+        ...mapGetters([
+          'isAuthenticate',
+          'getNome',
+          'getMessage'
+        ]),
       },
       methods: {
         ...mapActions([
           'login',
+          'logout',
+          'setMessage'
         ]),
+        logoutAndClean (){
+          this.logout ();
+        },
         validateBeforeSubmit() {
             this.$validator.validateAll().then(() => {
-            this.login(this.userData);
-            alert('From Submitted!');
+              this.login(this.userData);
           }).catch(() => {
-            alert('Correct them errors!');
+            this.setMessage('Correct them errors!');
           });
         }
       }
